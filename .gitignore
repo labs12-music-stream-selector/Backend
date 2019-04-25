@@ -80,4 +80,4 @@ typings/
 .dynamodb/
 
 # Databases
-.db3
+*.db3
