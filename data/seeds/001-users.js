@@ -1,64 +1,67 @@
+const bcrypt = require('bcryptjs')
+
+const testPass = bcrypt.hashSync('testing', 12)
 
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
   return knex('users').insert([
     {
       username: 'happyGirl',
-      password: 'testing',
+      password: testPass,
       email: 'happygirl@yahoo.com',
       patreon_support: false
     },
     {
       username: 'animeFan',
-      password: 'testing',
+      password: testPass,
       email: 'animefan@yahoo.com',
       patreon_support: false
     },
     {
       username: 'worldwideHandsome',
-      password: 'testing',
+      password: testPass,
       email: 'handsome@yahoo.com',
       patreon_support: false
     },
     {
       username: 'over9000',
-      password: 'testing',
+      password: testPass,
       email: 'over9000@gmail.com',
       patreon_support: false
     },
     {
       username: 'dancingMachine',
-      password: 'testing',
+      password: testPass,
       email: 'dancingmachine@yahoo.com',
       patreon_support: false
     },
     {
       username: 'bigvinaMac',
-      password: 'testing',
+      password: testPass,
       email: 'bigvinamac@yahoo.com',
       patreon_support: false
     },
     {
       username: 'TripleH',
-      password: 'testing',
+      password: testPass,
       email: 'tripleh@gmail.com',
       patreon_support: false
     },
     {
       username: 'hipHopFan',
-      password: 'testing',
+      password: testPass,
       email: 'hiphopfan@gmail.com',
       patreon_support: false
     },
     {
       username: 'Moonwalker',
-      password: 'testing',
+      password: testPass,
       email: 'moonwalker@gmail.com',
       patreon_support: false
     },
     {
       username: 'BTSStan',
-      password: 'testing',
+      password: testPass,
       email: 'btsstan@gmail.com',
       patreon_support: false
     }
