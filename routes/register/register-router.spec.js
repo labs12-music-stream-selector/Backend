@@ -3,6 +3,7 @@ const server = require('../../api/server.js');
 const register = require('./register-router.js');
 const db = require('../../data/dbConfig');
 const bcrypt = require('bcryptjs');
+require("dotenv").config();
 
 describe('Register Route', () => {
   describe('GET /api/register', () => {
@@ -33,7 +34,6 @@ describe('Register Route', () => {
 
     it('should return JSON', () => {
       return request(server).post('/api/register').send({ username: 'testregister', password: 'pass' }).then(res => {
-        // console.log(res)
         expect(res.type).toBe('application/json')
       })
     })
