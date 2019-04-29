@@ -1,7 +1,8 @@
 const router = require('express').Router();
 // const playlists = require('../../data/helpers/playlists') //implement helpers
 
-router.get('/api/user/playlists', async (req, res) => {
+router.get('/', async (req, res) => {
+	console.log('called');
 	try {
 		let playlists = [];
 		//playlists = await 
