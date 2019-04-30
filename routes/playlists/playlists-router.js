@@ -33,20 +33,20 @@ router.put('/', async (req, res) => {
 		res.status(400).json({message: 'incomplete data'})
 	}
 	try {
-		let res = 1;
+		let success = 1;
 		// TODO: update playlist for user
 		res.status(200).json(1);
 	} catch (error) {
-		res.status(500).json(error);
+		res.status(500).json(success);
 	}
 });
 
 router.delete('/:id', async (req, res) => {
 	const {id} = req.params;
 	try {
-		let res = 1;
+		let success = 1;
 		// TODO: delete playlist with id from user
-		res.status(200).json(1);
+		res.status(200).json(success);
 	} catch (error) {
 		res.status(500).json(error);
 	}
