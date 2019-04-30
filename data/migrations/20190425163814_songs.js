@@ -9,8 +9,6 @@ exports.up = function(knex, Promise) {
     song.string('description').notNullable()
     song.string('artist').notNullable()
     song.string('mood').notNullable()
-    song.integer('likes').notNullable()
-    song.integer('dislikes').notNullable()
 
   })
 };
