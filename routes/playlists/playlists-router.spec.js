@@ -38,4 +38,22 @@ describe('Playlists router', () => {
 				expect(res.type).toBe('application/json');
 			});
 	});
+
+	describe('PUT /', () => {
+		it('should return status 200', async () => {
+			const res = await request(server).put(url).send({
+				userId: 1,
+				playlistName: 'Gaming Stream'
+			});
+			expect(res.status).toBe(200);
+		});
+
+		it('should return json', async () => {
+				const res = await request(server).put(url).send({
+				userId: 1,
+				playlistName: 'Gaming Stream'
+			});
+				expect(res.type).toBe('application/json');
+			});
+	});
 });
