@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
 	}
 });
 
-router.PUT('/', async (req, res) => {
+router.put('/', async (req, res) => {
 	const {userId, playlistName} = req.body;
 	if(!userId || !playlistName){
 		res.status(400).json({message: 'incomplete data'})
@@ -34,6 +34,17 @@ router.PUT('/', async (req, res) => {
 	try {
 		let res = 1;
 		// TODO: update playlist for user
+		res.status(200).json(1);
+	} catch (error) {
+		res.status(500).json(error);
+	}
+});
+
+router.delete('/:id', async (req, res) => {
+	const {id} = req.params;
+	try {
+		let res = 1;
+		// TODO: delete playlist with id from user
 		res.status(200).json(1);
 	} catch (error) {
 		res.status(500).json(error);
