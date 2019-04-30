@@ -56,4 +56,16 @@ describe('Playlists router', () => {
 				expect(res.type).toBe('application/json');
 			});
 	});
+
+	describe('delete /:id', () => {
+		it('should return status 200', async () => {
+			const res = await request(server).delete(`${url}/1`);
+			expect(res.status).toBe(200);
+		});
+
+		it('should return json', async () => {
+				const res = await request(server).delete(`${url}/1`);
+				expect(res.type).toBe('application/json');
+			});
+	});
 });
