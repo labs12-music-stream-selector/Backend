@@ -12,4 +12,18 @@ router.get('/', async (req, res) => {
 	}
 });
 
+router.post('/', async (req, res) => {
+	const {userId, playlistName} = req.body;
+	if(!userId || !playlistName){
+		res.status(400).json({message: 'incomplete data'})
+	}
+	try {
+		let res = 1;
+		// TODO: Create new playlist for user
+		res.status(200).json(1);
+	} catch (error) {
+		res.status(500).json(error);
+	}
+});
+
 module.exports = router;
