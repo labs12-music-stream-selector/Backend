@@ -5,7 +5,7 @@
   "scripts": {
     "server": "nodemon index.js",
     "start": "node index.js",
-    "testing": "cross-env DB_ENV=testing jest --watch --verbose",
+    "testing": "cross-env DB_ENV=testing jest --watch --verbose --runInBand",
     "test": "cross-env DB_ENV=testing jest --watch"
   },
   "repository": "https://github.com/labs12-music-stream-selector/Backend.git",
