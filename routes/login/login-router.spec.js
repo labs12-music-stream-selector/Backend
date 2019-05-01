@@ -14,7 +14,7 @@ describe('Login Route', () => {
     })
 
     it("should return a status 200", async () => {
-      await db('users').insert({ username: "testregister", password: pass, email: "testing@tester.com" })
+      await db('users').insert({ name: "testregister", password: pass, email: "testing@tester.com" })
       const res = await request(server).post('/api/login').send({ username: "testregister", password: "pass" });
       expect(res.status).toBe(200);
     })
