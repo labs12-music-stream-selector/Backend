@@ -4,7 +4,7 @@ const testPass = bcrypt.hashSync('testing', 12)
 
 exports.seed = function (knex, Promise) {
   // Deletes ALL existing entries
-  return knex('usersOAuth').insert([
+  return knex('users').insert([
     {
       name: 'Kawsar',
       email: 'happygirl@yahoo.com',
