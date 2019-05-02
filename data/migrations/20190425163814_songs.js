@@ -1,6 +1,6 @@
 exports.up = function (knex, Promise) {
   return knex.schema.createTable('songs', song => {
-    song.increments()
+    song.increments("id");
 
     song.string('artist').notNullable();
     song.string('track_title').notNullable();
