@@ -9,7 +9,7 @@ exports.up = function (knex) {
     user.integer("provider_id");
     user.string("provider_pic");
     user.string("token");
-    user.boolean("Patreon_Support").defaultTo(false);
+    user.boolean("patreon_support").defaultTo(false);
   });
 };
 
