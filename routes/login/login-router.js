@@ -4,7 +4,6 @@ const db = require('../../data/dbConfig.js');
 router.post('/oauth', async (req, res) => {
   try {
     let { name, email, token } = req.body;
-    console.log(req.body);
     const data = {
       name,
       email,
