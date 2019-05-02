@@ -1,18 +1,18 @@
-
-exports.up = function(knex, Promise) {
+exports.up = function (knex, Promise) {
   return knex.schema.createTable('songs', song => {
-    song.increments()
+    song.increments("id");
 
-    song.time('track_length').notNullable()
-    song.string('track_title').notNullable()
-    song.string('genre').notNullable()
-    song.string('description').notNullable()
-    song.string('artist').notNullable()
-    song.string('mood').notNullable()
-
+    song.string('artist').notNullable();
+    song.string('track_title').notNullable();
+    song.integer('likes').notNullable();
+    song.integer('comments').notNullable();
+    song.integer('total_plays').notNullable();
+    song.string('mood').notNullable();
+    song.string('url').notNullable();
+    song.string('video_id');
   })
 };
 
-exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists('songs')
+exports.down = function (knex, Promise) {
+
 };
