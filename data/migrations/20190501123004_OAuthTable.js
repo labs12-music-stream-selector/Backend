@@ -1,5 +1,5 @@
 exports.up = function (knex) {
-  return knex.schema.createTable("usersOAuth", user => {
+  return knex.schema.createTable("users", user => {
     user.increments("id");
     user
       .string("name", 128)
@@ -14,5 +14,5 @@ exports.up = function (knex) {
 };
 
 exports.down = function (knex) {
-  return knex.schema.dropTableIfExists("userOAuth");
+  return knex.schema.dropTableIfExists("users");
 };
