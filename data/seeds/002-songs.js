@@ -7,7 +7,7 @@ exports.seed = function (knex, Promise) {
       return knex('songs').insert([
         { artist: 'Brandon Jonak & Pep.B', track_title: 'Brandon Jonak & Pep.B - Where Do I Go', likes: 379, comments: 41, total_plays: 72600, mood: "In - Love", url: "https://www.youtube.com/watch?v=Vrd8uDWRmx0" },
         { artist: 'Jingle Punks', track_title: 'Jingle Punks - Skull Fire', likes: 42, comments: 2, total_plays: 6234, mood: "Happy", url: 'https://www.youtube.com/watch?v=OtRQeYvrIU0' },
-        { artist: 'Lord Of The Rings', track_title: 'Lord Of The Rings - Hobbit Theme', likes: 136, comments: 11, total_plays: 31300, mood: "Happy", url: 'https://www.youtube.com/watch?v=OtRQeYvrIU0' },
+        { artist: 'Lord Of The Rings', track_title: 'Lord Of The Rings - Hobbit Theme', likes: 136, comments: 11, total_plays: 31300, mood: "Happy", url: 'https://www.youtube.com/watch?v=inqp1Gc1mAc' },
         { artist: 'Jo Cohen & Sex Whales', track_title: 'Jo Cohen & Sex Whales - Run Away(feat.Lusil)', likes: 136, comments: 11, total_plays: 31300, mood: "Happy", url: 'https://www.youtube.com/watch?v=wHHSN6tdeZI' },
         { artist: 'Klave', track_title: 'Klave - Realer Than Love(feat.Francis)', likes: 367, comments: 28, total_plays: 50600, mood: "In - Love", url: 'https://www.youtube.com/watch?v=MZ5bl5ipjKs' },
         { artist: 'Sad Piano Ambient', track_title: 'Sad Piano Ambient - FREE Background Music', likes: 273, comments: 13, total_plays: 46500, mood: "Sad", url: 'https://www.youtube.com/watch?v=HI7egq3SnIA' },
