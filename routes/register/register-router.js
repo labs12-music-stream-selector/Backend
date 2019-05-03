@@ -7,11 +7,11 @@ router.post('/oauth', async (req, res) => {
     let { token, name, email } = user;
     const existingUser = await db('users').where({ email: email }).first();
     if (existingUser) {
-      return res.status(201).json({ token, email, name });
+      return res.status(200).json({ id: existingUser.id, token, email, name });
     } else {
-      const id = await db('users').insert(user).returning("id");
+      const [id] = await db('users').insert(user).returning("id");
       if (id) {
-        return res.status(200).json({ id, token, name, email });
+        return res.status(201).json({ id, token, name, email });
       }
     }
   } catch (error) {
