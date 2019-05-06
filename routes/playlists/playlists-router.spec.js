@@ -8,10 +8,20 @@ describe('Playlists router', () => {
 			expect(res.status).toBe(200);
 		});
 
-		it('should return array of playlists', (done) => {
-			return request(server).get('/api/user/playlists')
-				.expect([], done);
-		});
+		// it('should return array of playlists', async (done) => {
+		// 	const response = await request(server).get('/api/user/playlists');
+		// 	console.log(response.body[0]);
+		// 	expect(response.body[0]).objectContaining({
+		// 		id: expect.any(Number),
+		// 		artist: expect.any(String),
+		// 		track_title: expect.any(String),
+		// 		likes: expect.any(Number),
+		// 		comments: expect.any(Number),
+		// 		total_plays: expect.any(Number),
+		// 		mood: expect.any(String),
+		// 		url: expect.any(String)
+		// 	});
+		// });
 
 		it('should return json', async () => {
 			const res = await request(server).get('/api/user/playlists');
