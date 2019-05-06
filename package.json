@@ -5,8 +5,8 @@
   "scripts": {
     "server": "nodemon index.js",
     "start": "node index.js",
-    "testing": "cross-env DB_ENV=testing jest --watch --verbose --runInBand",
-    "test": "cross-env DB_ENV=testing jest --watch"
+    "testing": "cross-env DV_ENV=testing jest --watch --verbose --runInBand",
+    "test": "cross-env DV_ENV=testing jest --watch"
   },
   "repository": "https://github.com/labs12-music-stream-selector/Backend.git",
   "author": "Logan Hufstetler <logan.hufstetler@gmail.com>, Jonathan Bernal <jon@bluesandswebdesign.com>, Md Kawsar Hussen <kawsarhussen@gmail.com>, John Humphreys, Xander Jake de los Santos <13279523+xanderjakeq@users.noreply.github.com>, Davina Taylor <davinaleo2007@yahoo.com>, Sammy Lee",
