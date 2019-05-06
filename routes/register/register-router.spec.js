@@ -1,40 +1,33 @@
 const request = require('supertest');
 const server = require('../../api/server.js');
-const register = require('./register-router.js');
 const db = require('../../data/dbConfig');
-const bcrypt = require('bcryptjs');
 require("dotenv").config();
 
-describe('Register Route', () => {
-  describe('GET /api/register', () => {
-    beforeAll(async () => {
+describe('OAuth register Route', () => {
+  describe('GET /api/login/oauth', () => {
+    beforeEach(async () => {
       await db('users').truncate();
     })
 
-    it("no user in DB should return a status 400", async () => {
-      const res = await request(server).post('/api/register').send({ username: "testregister", password: "pass" });
-      expect(res.status).toBe(400);
+    it("should return a status 200", async () => {
+      user = { name: "testregister", token: "liuahwefliuhawe.awerfihu34tihwef89.239rguweiufh9fnw349thf82398rfh", email: "testinger@tester.com" };
+      const id = await db('users').insert(user);
+      const res = await request(server).post('/api/register/oauth').send(user);
+      expect(res.status).toBe(200);
     })
 
-    it("User in DB w/ correct username and pass should return a status 200", async () => {
-      await db('users').insert({ username: "testregister", password: "pass", email: "testing@tester.com" })
-      const res = await request(server).post('/api/register').send({ username: "testregister", password: "pass" });
-      expect(res.status).toBe(400);
-    })
-
-    it("No username should return a status 400", async () => {
-      const res = await request(server).post('/api/register').send({ username: "", password: "pass" });
-      expect(res.status).toBe(400);
-    })
-
-    it("No password should return a status 400", async () => {
-      const res = await request(server).post('/api/register').send({ username: "testregister", password: "" });
-      expect(res.status).toBe(400);
-    })
-
-    it('should return JSON', () => {
-      return request(server).post('/api/register').send({ username: 'testregister', password: 'pass' }).then(res => {
+    it('should return JSON', async () => {
+      user = { name: "testregister", token: "liuahwefliuhawe.awerfihu34tihwef89.239rguweiufh9fnw349thf82398rfh", email: "testing@tester.com" };
+      const id = await db('users').insert(user);
+      return request(server).post('/api/register/oauth').send(user).then(res => {
         expect(res.type).toBe('application/json')
+      })
+    })
+
+    it('should return a status 400 when no token is provided', async () => {
+      user = { name: "testregister", token: "liuahwefliuhawe.awerfihu34tihwef89.239rguweiufh9fnw349thf82398rfh", email: "testing@tester.com" };
+      return request(server).post('/api/register/oauth').send(user).then(res => {
+        expect(res.status).toBe(201);
       })
     })
   })
