@@ -9,18 +9,12 @@ router.post('/oauth', async (req, res) => {
       email,
       token
     }
-    console.log("data: ", data);
-    if (user.token) {
-      console.log("first if passes")
+    if (token) {
       const user = await db('users').where({ name: data.name }).first();
-      console.log("user: ", user)
       if (user) {
-        console.log("second if passes")
         res.status(200).json({ message: "Welcome back!", token })
       } else {
-        console.log("second if fails")
         const id = await db('users').insert(user).returning("id");
-        console.log("id: ", id)
         if (id > 0) {
           res.status(201).json({ message: "New user created", token })
         } else {
