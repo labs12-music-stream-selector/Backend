@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const secrets = require('../api/secrets.js');
+const secrets = require('../auth/config/secrets.js');
 
 module.exports = (req, res, next) => {
   const token = req.headers.authorization;
