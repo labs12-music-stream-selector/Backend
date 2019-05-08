@@ -2,6 +2,7 @@
 const express = require("express");
 const configureMiddleware = require("./middleware.js");
 const server = express();
+const restricted = require('./restrict-routes.js')
 configureMiddleware(server);
 // ---------- ROUTING ---------- //
 const registerRouter = require('../routes/register/register-router.js');
