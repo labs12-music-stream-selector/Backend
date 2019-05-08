@@ -2,6 +2,7 @@
 const express = require("express");
 const configureMiddleware = require("./middleware.js");
 const server = express();
+const restricted = require('./restrict-routes.js')
 configureMiddleware(server);
 // ---------- ROUTING ---------- //
 const registerRouter = require('../routes/register/register-router.js');
@@ -17,6 +18,6 @@ const songListRouter = require('../routes/song-list/song-list-router.js');
 server.use('/api/register', registerRouter);
 server.use('/api/user/playlists', playlistsRouter);
 server.use('/api/users', users);
-server.use('/api/song-list', songListRouter);
+server.use('/api/song-list', restricted, songListRouter);
 
 module.exports = server;
