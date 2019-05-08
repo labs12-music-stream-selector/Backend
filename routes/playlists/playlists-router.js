@@ -24,18 +24,20 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
 	const {
-		track_length,
-		track_title,
-		genre,
-		description,
 		artist,
-		mood
+		track_title,
+		likes,
+		comments,
+		total_plays,
+		mood,
+		url
+
 	} = req.body
 
-	if(!track_length || !track_title || !genre || !description || !artist || !mood) {
+	if(!artist || !track_title || !likes || !comments || !total_plays || !mood || !url) {
 		res.status(404).json({ message: 'Fill in all of the fields' })
 	} else {
-		db('songs').insert({ track_length, track_title, genre, description, artist, mood })
+		db('songs').insert({ artist, track_title, likes, comments, total_plays, mood, url })
 			.then(song => {
 				res.status(201).json({ message: 'Song has been created' })
 			}).catch(err => {
