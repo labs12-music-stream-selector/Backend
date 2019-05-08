@@ -18,6 +18,6 @@ const songListRouter = require('../routes/song-list/song-list-router.js');
 server.use('/api/register', registerRouter);
 server.use('/api/user/playlists', playlistsRouter);
 server.use('/api/users', users);
-server.use('/api/song-list', restricted, songListRouter);
+server.use('/api/song-list', songListRouter);
 
 module.exports = server;
