@@ -4,9 +4,10 @@ const secrets = require('../auth/config/secrets.js');
 
 module.exports = (req, res, next) => {
   const token = req.headers.authorization;
-
   if (token) {
-    jwt.verify(token, process.env.SECRET, (err, decodedToken) => {
+    console.log(process.env.SECRET);
+    jwt.verify(token, process.env.SECRET, { algorithm: 'RS256' }, (err, decodedToken) => {
+      console.log('err: ', err)
       if (err) { // the token is not valid
         res.status(401).json({ message: 'Invalid Credentials' });
       } else { // If token valid
