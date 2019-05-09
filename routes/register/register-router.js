@@ -5,14 +5,14 @@ router.post('/oauth', async (req, res) => {
   console.log("/oauth route");
   try {
     let user = req.body;
-    console.log("user: ", user);
+    console.log("Line8 user: ", user);
     let { token, name, email } = user;
-    console.log("token: ", token);
-    console.log("name: ", name);
-    console.log("email: ", email);
+    console.log("Line10 token: ", token);
+    console.log("Line11 name: ", name);
+    console.log("Line12 email: ", email);
     //console.log(user)
     const existingUser = await db('users').where({ 'email': email }).first();
-    console.log("existingUser: ", existingUser);
+    console.log("Line15 existingUser: ", existingUser);
     //console.log(existingUser)
     if (existingUser) {
       console.log("if existingUser true");
