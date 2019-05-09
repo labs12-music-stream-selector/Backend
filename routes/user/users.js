@@ -6,7 +6,7 @@ const secret = require('../../auth/config/secrets.js')
 
 // Getting all the users
 
-router.get('/', restricted, async (req, res) => {
+router.get('/', async (req, res) => {
     await userDb.find()
         .then(users => {
             res.json(users);
@@ -73,21 +73,21 @@ async function validUserId(req, res, next){
   }
 }
 
-function restricted(req, res, next) {
-  const token = req.headers.authorization
-  console.log(req.headers)
-  if(token) {
-    jwt.verify(token, secret.jwtSecret, (err, decodedToken) => {
-      if(err) {
-        res.status(401).json({ message: 'Invaild credentials' })
-      } else {
-        req.decodedJwt = decodedToken
-        next()
-      }
-    })
-  } else {
-    res.status(401).json({ message: 'No token provided' })
-  }
-}
+// function restricted(req, res, next) {
+//   const token = req.headers.authorization
+//   console.log(req.headers)
+//   if(token) {
+//     jwt.verify(token, secret.jwtSecret, (err, decodedToken) => {
+//       if(err) {
+//         res.status(401).json({ message: 'Invaild credentials' })
+//       } else {
+//         req.decodedJwt = decodedToken
+//         next()
+//       }
+//     })
+//   } else {
+//     res.status(401).json({ message: 'No token provided' })
+//   }
+// }
 
 module.exports = router;
