@@ -11,8 +11,8 @@ router.post('/oauth', async (req, res) => {
     console.log("name: ", name);
     console.log("email: ", email);
     //console.log(user)
-    const existingUser = await db('users').where({ 'email': email }).first();=-
-      console.log("existingUser: ", existingUser);
+    const existingUser = await db('users').where({ 'email': email }).first();
+    console.log("existingUser: ", existingUser);
     //console.log(existingUser)
     if (existingUser) {
       console.log("if existingUser true");
