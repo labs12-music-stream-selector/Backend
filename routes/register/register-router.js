@@ -2,12 +2,11 @@ const router = require('express').Router();
 const db = require('../../data/dbConfig');
 
 router.post('/oauth', async (req, res) => {
+  console.log("/oauth route");
   try {
     let user = req.body;
     let { token, name, email } = user;
-    //console.log(user)
-    const existingUser = await db('users').where({ email: email }).first();
-    //console.log(existingUser)
+    const existingUser = await db('users').where({ 'email': email }).first();
     if (existingUser) {
       return res.status(200).json({ id: existingUser.id, token, email, name });
     } else {
