@@ -53,11 +53,11 @@
 ---
 ### GET /api/song-list
 **Must Be Logged in with Token**
-*Returns the list of all songs
+* Returns the list of all songs.
 ---
 ### GET /api/user/playlists
 **Must Be Logged in with Token**
-*Returns the lists of playlist of the user
+* Returns the lists of playlist of the user
 --- 
 ### PUT /api/users/{id}
 **Must Be logged in and have a valid token**
@@ -69,7 +69,7 @@
 ---
 ### DELETE /api/user/playlists
 **Must Be logged in and have a valid token**
-*Permissible user can delete a playlist
+* Permissible user can delete a playlist.
 ---
 
 ### User Table
@@ -77,7 +77,6 @@
 | Column Name     | Attribute                                        |
 | --------------- | ------------------------------------------------ |
 | id              | integer - auto-increments                        |
-| username        | string - 128chars, can't be NULL, must be unique |
-| password        | string - no char limit, can't be NULL            |
+| name            | string - 128chars, can't be NULL, must be unique |     
 | email           | string - 128chars, must be unique                |
 | patreon_support | boolean - defaults to false                      |
