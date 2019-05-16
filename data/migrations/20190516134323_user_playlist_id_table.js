@@ -2,9 +2,9 @@
 exports.up = function(knex, Promise) {
     return knex.schema.createTable('userplaylists', tbl=>{
         tbl.increments("id");
-        tbl.integer("user_id").refrences("id").inTable("users")
-        tbl.string("playlist").refrences("id").inTable("playlists")
-        tbl.string("newplaylist").refrences("id").inTable("playlistsongs")  
+        tbl.integer("user_id").references("id").inTable("users")
+        tbl.string("playlist").references("id").inTable("playlists")
+        tbl.string("newplaylist").references("id").inTable("playlistsongs")  
     })
 };
 
