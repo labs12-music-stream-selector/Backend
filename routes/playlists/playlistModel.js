@@ -11,6 +11,7 @@ module.exports = {
   addSongsToPlaylist,
   removeASongFromPlaylist,
   getAlltheSongsOfAPlaylist,
+  removeASongFromPlaylist
 };
 
 async function addSongsToPlaylist(playlist_id,  song){
@@ -18,14 +19,15 @@ async function addSongsToPlaylist(playlist_id,  song){
   .returning("id");
   return findBySongId(id);
 }
+
 function getAlltheSongsOfAPlaylist(playlist_id) {
   return db('playlistsongs')
   .where({ playlist_id })
   .select('id', 'song_id', 'playlist_index')
 }
-function removeASongFromPlaylist(playlist_id) {
+function removeASongFromPlaylist(song_id) {
   return db('playlistsongs')
-    .where({ playlist_id })
+    .where({ song_id })
     .delete();
 }
 function findBySongId(id) {
