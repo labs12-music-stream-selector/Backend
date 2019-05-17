@@ -103,6 +103,18 @@ router.post('/:id/song', async(req, res)=>{
 	}
 	
 });
+// delete a song from a playlist
+router.delete('/:id/song/:id',
+	async (req, res) => {
+	  try {
+		const response = await Db.removeASongFromPlaylist(req.params.id);
+		console.log(response);
+		res.status(200).json({ message: 'the song was removed from playlist' });
+	  } catch (err) {
+		res.status(500).json({ error: `there was an error removing the song: ${err}` });
+	  }
+	}
+  );
 
 ///get all the songs of a playlist By id 
 
