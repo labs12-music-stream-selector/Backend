@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
     return knex.schema.createTable('playlistsongs', tbl=>{
         tbl.increments("id")
         tbl.integer("playlist_id").references("id").inTable("playlists").onDelete('CASCADE');
-        tbl.integer("song_id")
+        tbl.string("song_id")
         tbl.integer("playlist_index")
     })
 };

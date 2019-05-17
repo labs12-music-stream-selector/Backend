@@ -22,22 +22,23 @@ router.get('/:id', async(req, res)=>{
 	}
 });
 // Post a new playlist
-router.post('/', async (req, res) => {
-	try {
-	  let name = req.body;
-	  const existingPlaylist = await db('playlists').where({ 'name': name }).first();
-	  if (existingPlaylist) {
-		return res.status(200).json({ message: "Please try a different playlist name"  });
-	  } else {
-		const [id] = await db('playlists').insert(name).returning("id");
-		if (id) {
-		  return res.status(201).json({meassge: "Playlist has created", id, name});
+router.post('', async (req, res) => {
+		try {
+			let playlist = req.body;
+			let {  name, user_id } = playlist;
+			const existingList = await db('playlists').where({ 'name': name, 'user_id':user_id }).first();
+			if (existingList) {
+				return res.status(200).json({ message: "Please try a different playlist name"   });
+			} else {
+				const [id] = await db('playlists').insert(playlist).returning("id");
+				if (id) {
+					return res.status(201).json({ id, name, user_id });
+				}
+			}
+		} catch (error) {
+			res.status(500).json({ message: "internal server error", error: error });
 		}
-	  }
-	} catch (error) {
-	  res.status(500).json({ message: "internal server error", error: error });
-	}
-  });
+	});
 // delete a playlist
 router.delete('/:id', (req, res) => {
 	db('playlists').where({id: req.params.id})
@@ -74,29 +75,50 @@ router.put('/:id', async (req, res) => {
 }
 );
 
-// router.post('/', (req, res) => {
-// 	const {
-// 		artist,
-// 		track_title,
-// 		likes,
-// 		comments,
-// 		total_plays,
-// 		mood,
-// 		url
+//get a user's all playlists
 
-// 	} = req.body
+router.get('/:id/playlists', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const List = await Db.findPlaylist(id);
+    res.status(200).json(List);
+  } catch (err) {
+    res.status(500).json({ error: `there was an error accessing the db: ${err}` });
+  }
+}
+);
 
-// 	if(!artist || !track_title || !likes || !comments || !total_plays || !mood || !url) {
-// 		res.status(404).json({ message: 'Fill in all of the fields' })
-// 	} else {
-// 		db('songs').insert({ artist, track_title, likes, comments, total_plays, mood, url })
-// 			.then(song => {
-// 				res.status(201).json({ message: 'Song has been created' })
-// 			}).catch(err => {
-// 				res.status(500).json({ message: 'Internal server error. Try again.' })
-// 			})
-// 	}
-// })
+// add a song to a playlist
+
+router.post('/:id/song', async(req, res)=>{
+	try {    
+		  ///This id is playlist id 
+		  const { id } = req.params;
+			const playlist = req.body;
+			const song = await Db.addSongsToPlaylist(id, playlist);
+			console.log("song", song)
+			res.status(200).json({Message: song});
+	} catch (err) {
+			res.status(500).json(err);
+	}
+	
+});
+
+///get all the songs of a playlist By id 
+
+router.get('/:id/songs', async (req, res) => {
+	try {
+		const songs = await Db.getAlltheSongsOfAPlaylist(req.params.id);
+		if(songs.length){
+			res.status(200).json(songs);
+	  } else {
+			res.status(400).json({err: 'there are no song in this playlist' } );
+		}
+	}catch(err){
+		console.log(err)
+		res.status(500).json({error: 'There is an error '})
+	}
+});
 
 
 module.exports = router;

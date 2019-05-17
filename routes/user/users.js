@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const userDb = require('./UserModel.js');
-
 const jwt = require('jsonwebtoken')
 const secret = require('../../auth/config/secrets.js')
 
@@ -34,8 +33,6 @@ router.delete('/:id', validUserId, (req, res) => {
       res.status(200).json({message: `${confirm} id deleted` })
      })
   })
-
-
 
   // Updating Users profile
 router.put('/:id',validUserId, async (req, res) => {
