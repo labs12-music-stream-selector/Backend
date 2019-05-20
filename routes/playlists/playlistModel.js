@@ -25,9 +25,9 @@ function getAlltheSongsOfAPlaylist(playlist_id) {
   .where({ playlist_id })
   .select('id', 'song_id', 'playlist_index')
 }
-function removeASongFromPlaylist(song_id) {
+function removeASongFromPlaylist(id) {
   return db('playlistsongs')
-    .where({ song_id })
+    .where({ id })
     .delete();
 }
 function findBySongId(id) {
