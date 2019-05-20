@@ -94,16 +94,18 @@ router.get('/:id/playlists', validUserId, async (req, res) => {
 router.post('/:id/song', async(req, res)=>{
 	try {    
 		  ///This id is playlist id 
-		  const { id } = req.params;
-			const playlist = req.body;
-			const song = await Db.addSongsToPlaylist(id, playlist);
-			console.log("song", song)
+			const { id } = req.params;
+			const playlistdata = req.body;
+			const {playlist, playlist_index} = playlistdata;
+			console.log(playlistdata);
+			const song = await Db.addSongsToPlaylist(id, playlistdata);
 			res.status(200).json({Message: song});
 	} catch (err) {
 			res.status(500).json(err);
 	}
 	
 });
+
 // delete a song from a playlist
 router.delete('/:id/song/:songid',
 	async (req, res) => {
@@ -115,11 +117,34 @@ router.delete('/:id/song/:songid',
 		res.status(500).json({ error: `there was an error removing the song: ${err}` });
 	  }
 	}
-  );
+	);
+	
+	// update a song's index  of a playlist
+router.put('/:id/song/:songid', async (req, res) => {
+	try {
+			const {playlist_index} = req.body;
+			const id =req.params.songid;
+			if (!playlist_index) {
+				res.status(400).json({ message: "Please provide a index number" })
+		  } else{
+						const count = await Db.updateindex(id, req.body)
+						.then(list=>{
+							if (list) {
+								res.status(200).json(req.body)
+							} else {
+								res.status(404).json({ message: "The Song with the specific id does not exist." })
+								}
+							})
+			}
+	} catch (err) {
+		res.status(500).json({ error: `there was an error accessing the db: ${err}` });
+	}
+}
+);
 
 ///get all the songs of a playlist By id 
 
-router.get('/:id/songs', validUserId, async (req, res) => {
+router.get('/:id/songs', async (req, res) => {
 	try {
 		const songs = await Db.getAlltheSongsOfAPlaylist(req.params.id);
 		if(songs.length){
