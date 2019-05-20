@@ -6,6 +6,7 @@ module.exports = {
   findBy,
   findById,
   update,
+  updateindex,
   deletePlaylist,
   findPlaylist,
   addSongsToPlaylist,
@@ -15,7 +16,7 @@ module.exports = {
 };
 
 async function addSongsToPlaylist(playlist_id,  song){
-  const [id] = await db('playlistsongs').insert({playlist_id, song_id: song.song_id})
+  const [id] = await db('playlistsongs').insert({playlist_id, song_id: song.song_id, playlist_index: song.playlist_index})
   .returning("id");
   return findBySongId(id);
 }
@@ -40,6 +41,11 @@ function update(id, user) {
   return db('playlists')
     .where('id', Number(id))
     .update(user);
+}
+function updateindex(id, playlist_index) {
+  return db('playlistsongs')
+    .where('id', Number(id))
+    .update(playlist_index);
 }
 
 function deletePlaylist(id) {
