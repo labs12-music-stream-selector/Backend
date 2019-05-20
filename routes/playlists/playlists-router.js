@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const db = require('../../data/dbConfig.js')
 const Db = require('./playlistModel.js');
+const userDb = require('../user/UserModel.js');
 
 // get All the playlist
 router.get('/', async (req, res) => {
@@ -22,7 +23,7 @@ router.get('/:id', async(req, res)=>{
 	}
 });
 // Post a new playlist
-router.post('', async (req, res) => {
+router.post('/', validUserId, async (req, res) => {
 		try {
 			let playlist = req.body;
 			let {  name, user_id } = playlist;
@@ -77,7 +78,7 @@ router.put('/:id', async (req, res) => {
 
 //get a user's all playlists
 
-router.get('/:id/playlists', async (req, res) => {
+router.get('/:id/playlists', validUserId, async (req, res) => {
   try {
     const { id } = req.params;
     const List = await Db.findPlaylist(id);
@@ -118,7 +119,7 @@ router.delete('/:id/song/:songid',
 
 ///get all the songs of a playlist By id 
 
-router.get('/:id/songs', async (req, res) => {
+router.get('/:id/songs', validUserId, async (req, res) => {
 	try {
 		const songs = await Db.getAlltheSongsOfAPlaylist(req.params.id);
 		if(songs.length){
@@ -131,6 +132,21 @@ router.get('/:id/songs', async (req, res) => {
 		res.status(500).json({error: 'There is an error '})
 	}
 });
+
+ // Validate Users Id if exists
+ async function validUserId(req, res, next){
+  try {
+		const {user_id} = req.body;
+    const user = await userDb.findById(user_id);
+    if (!user) {
+      res.status(400).json({ error: 'This Id is not exists' });
+    } else {
+      next();
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 
 module.exports = router;
