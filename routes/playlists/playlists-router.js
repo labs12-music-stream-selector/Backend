@@ -78,7 +78,7 @@ router.put('/:id', async (req, res) => {
 
 //get a user's all playlists
 
-router.get('/:id/playlists', validUserId, async (req, res) => {
+router.get('/:id/playlists', async (req, res) => {
   try {
     const { id } = req.params;
     const List = await Db.findPlaylist(id);
