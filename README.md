@@ -1,20 +1,39 @@
-# Backend
+# MOODIBEATS
+* Free music for everyone!
+* Music by mood!
+* Copyright free music for video creators!
+## Contributors
 
-# API for the fantabulous-music-finder
+[Logan Hufstetler](https://github.com/BlissCatalyst)|       [Davina Taylor](https://github.com/lilvina)|                [Joh Humphreys](https://github.com/johnpharmd)|                 [Md Kawsar Hussen](https://github.com/kkingbd) |            [Jonathan Bernal](https://github.com/BlueSandWeb) |                               [Sammy Lee](github.com/Captmoonshot) |  [Xander Jake de los Santos](https://github.com/xanderjakeq) | 
+| :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
+|                      [<img src="https://avatars2.githubusercontent.com/u/46465575?s=400&v=4" width = "200" />](https://github.com/BlissCatalyst)                       |                      [<img src="https://avatars0.githubusercontent.com/u/10713358?s=400&u=f3dd10a2ecfa7efa5b993fc63fd905cf14311fd3&v=4" width = "200" />](https://github.com/lilvina) | [<img src="https://avatars0.githubusercontent.com/u/6886907?s=400&v=4" width = "200" />](https://github.com/johnpharmd)                      |                      [<img src="https://avatars0.githubusercontent.com/u/46500263?s=400&v=4" width = "200" />](https://github.com/kkingbd)                       |     [<img src="https://avatars1.githubusercontent.com/u/17155841?s=400&v=4" width = "200" />](https://github.com/BlueSandWeb)                       |                    [<img src="https://avatars1.githubusercontent.com/u/17155841?s=400&v=4" width = "200" />](https://github.com/Captmoonshot)                       |                      [<img src="https://avatars2.githubusercontent.com/u/13279523?s=460&v=4" width = "200" />](https://github.com/xanderjakeq)                       |
+|                                          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/BlissCatalyst)             |           [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/lilvina)            |          [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/johnpharmd)           |            [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/kkingbd)             | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/BlueSandWeb)             | [<img src="https://github.com/favicon.ico" width="15"> ](https://github.com/Captmoonshot)             | [<img src="https://github.com/fav" width="15"> ](https://github.com/xanderjakeq)
+| [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/logan-hufstetler-145611a2/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/davinataylor123/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/johnhumphreys/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/kkingbd) |  [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/jon-bernal/) |  [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/sammy-lee-89944282/) | [ <img src="https://static.licdn.com/sc/h/al2o9zrvru7aqj8e1x2rzsrca" width="15"> ](https://www.linkedin.com/in/xanderjakeq/) |
 
-## Base url : https: fantabulous-music-finder.heroukuapp.com
+![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)
+![Typescript](https://img.shields.io/npm/types/typescript.svg?style=flat)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b5c4db1c-b10d-42c3-b157-3746edd9e81d/deploy-status)](https://moodybeats.netlify.com/)
+
 
 ## Endpoints
+### User Table
 
-### POST /api/register/oauth
-* Registers a user: User must have a name, email, and a token from google.
+| Column Name     | Attribute                           |
+| --------------- |-------------------------------------|
+| id              | integer - auto-increments           |
+| name            | string - 128chars, can't be NULL    |     
+| email           | string - 128chars, must be unique   |   
+| token           | text - import from google directly  |
+| patreon_support | boolean - defaults to false         |
+----------------------------------------------------------
+##### POST   /api/register/oauth
+* Register a user: User must have a name, email, and a token from google.
 * Request example: 
 ```
 {
     name:    "David Albert"
     email:   "davidalbert@email.com"
-    token:   "ya29GlwIB9MO2nsd8GcYummrxI2x7lxkWITjIst0QVXxkR6y90yo-bwAupQRbO
-            YpcRRuPUrt5HrKz_DGkF6puDJTedweEI6eJ6YNY_ufg5HtbsFHD894mR1w"
+    token:   "ya29GlwIB9MO2nsd8GcYummrxI2x7lxkWITjIst0QVXxkR6y90yo-bwAupQRbOYpcRRuPUrt5HrKzdweEeJ6YNY_ufg5HtbsFHD894mR1w"
 }
 ```
 * Returns
@@ -26,22 +45,8 @@
 }
 ```
 ---
-### POST /api/user/playlists
-* Request example: 
-```
-{
-    artist:         "Rihanna"
-	track_title:    "Love in the Brain"
-	likes:          "2M"
-	comments:       "100k"
-	total_plays:    "30M"
-	mood:           "Love"
-	url:            "https://www.songspk.com/love_in_the_brain"
-}
-```
----
-### GET /api/users/{id}
-**Must Be Logged in with Token**
+##### GET /api/users/{user_id}
+* **Must Be Logged in with Token**
 * Returns an object with a single user's info. Only accessible by that user.
 ```
 {
@@ -51,32 +56,134 @@
 }
 ```
 ---
-### GET /api/song-list
-**Must Be Logged in with Token**
-* Returns the list of all songs.
----
-### GET /api/user/playlists
-**Must Be Logged in with Token**
-* Returns the lists of playlist of the user
---- 
-### PUT /api/users/{id}
-**Must Be logged in and have a valid token**
-* Update user info. Only accessible by that user.
----
-### DELETE /api/users/{id}
-**Must Be logged in and have a valid token**
+##### DELETE /api/users/{user_id}
+* **Must Be logged in and have a valid token**
 * Permanently delete the user info. Only permissible by that user.
 ---
-### DELETE /api/user/playlists
-**Must Be logged in and have a valid token**
-* Permissible user can delete a playlist.
+##### PUT /api/users/{user_id}
+* **Must Be logged in and have a valid token**
+* User can update user's name and email only. Only accessible by that user.
+
+ ********************************************************
+ ********************************************************
+##### POST api/user/playlists
+* **Must Be Logged in with Token**
+* Create a playlist
+* Request example:
+```
+{
+	"name": "My Playlist1",
+	"user_id" : 16
+}
+```
+* Returns:
+```
+{ 
+    "id": 4,
+    "name": "My Playlist1",
+    "user_id": 16
+}
+```
+---
+##### GET /api/user/playlists/{user_id}/playlists
+* **Must Be Logged in with Token**
+* Get users list of playlist
+* Returns Example:
+```
+[
+    {
+        "id": 4,
+        "name": "My PlayList1",
+        "user_id": 16
+    },
+    {
+        "id": 5,
+        "name": "My Playlist2",
+        "user_id": 16
+    }
+]
+```
+---
+##### GET /api/user/playlists/{playlist_id}
+* **User Must Be Logged in with Token**
+* Returns the requested playlist
+* Returns:
+ ```
+ {
+    "id": 4,
+    "name": "My Playlist1",
+    "user_id": 16
+}
+ ```
+ ---
+ ##### DELETE /api/user/playlists/{playlist_id}
+ * **User Must Be Logged in with Token**
+* Delete the requested playlist
+ ********************************************************
+ ********************************************************
+##### Post api/user/playlists/{playlist_id}/song
+*  **User Must Be Logged in with Token**
+* Add a song in a playlist
+* Request:
+```
+{
+	"song_id": "fghr_jje34",
+	"playlist_index" : 1
+}
+```
+* Returns :
+```
+{
+    "id": 5,
+    "playlist_id": 4,
+    "song_id": "fghr_jje34",
+    "playlist_index": 1
+}
+```
+---
+##### GET api/user/playlists/{playlist_id}/songs
+* **User Must Be Logged in with Token**
+* Returns the list of the songs of the requested playlist
+* Returns :
+```
+[
+    {
+        "id": 5,
+        "song_id": "fghr_jje34",
+        "playlist_index": 1
+    },
+    {
+        "id": 6,
+        "song_id": "kfjr95_fi",
+        "playlist_index": 2
+    },
+    {
+        "id": 7,
+        "song_id": "fgfh65_hrt",
+        "playlist_index": 3
+    }
+]
+```
+---
+##### DELETE /api/user/playlists/{playlist_id}/song/{song_id}
+* **User Must Be Logged in with Token**
+* Remove the song from the requested playlist 
+---
+##### PUT /api/user/playlists/{playlist_id}/song/{song_id}
+* **User Must Be Logged in with Token**
+* Update a Song's order in a playlist
+* Request Example:
+```
+   {
+	    "playlist_index" : 8
+   }
+```
+* Returns:
+```
+   {
+	    "playlist_index" : 8
+   }
+```
+
 ---
 
-### User Table
-
-| Column Name     | Attribute                                        |
-| --------------- | ------------------------------------------------ |
-| id              | integer - auto-increments                        |
-| name            | string - 128chars, can't be NULL, must be unique |     
-| email           | string - 128chars, must be unique                |
-| patreon_support | boolean - defaults to false                      |
