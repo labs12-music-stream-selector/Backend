@@ -150,7 +150,8 @@ router.get('/:id/songs', async (req, res) => {
 		if(songs.length){
 			res.status(200).json(songs);
 	  } else {
-			res.status(400).json({err: 'there are no song in this playlist' } );
+			let arr =[];
+			res.status(200).json(arr);
 		}
 	}catch(err){
 		console.log(err)
