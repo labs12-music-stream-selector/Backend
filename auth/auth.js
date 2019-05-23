@@ -33,7 +33,7 @@ async function authenticate(req, res, next) {
         const token = req.get('Authorization');
         if (token) {
             const extistedtoken = await userDb.findBytoken(token);
-            if (extistedtoken){     
+            if (extistedtoken){  
                 next();
             } else {
                 return res.status(403).json({error: 'You are not authorized or please login again'})
