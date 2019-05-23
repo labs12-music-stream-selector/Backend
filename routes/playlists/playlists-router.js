@@ -1,10 +1,11 @@
 const router = require('express').Router();
 const db = require('../../data/dbConfig.js')
 const Db = require('./playlistModel.js');
-const userDb = require('../user/UserModel.js');
+const {authenticate, validUser,validUserId, checkForPlaylistOwner, specialpermission}= require ('../../auth/auth.js');
 
 // get All the playlist
-router.get('/', async (req, res) => {
+//Protected
+router.get('/',specialpermission, async (req, res) => {
 	await Db.find()
 			.then(play => {
 					res.json(play);
@@ -14,7 +15,8 @@ router.get('/', async (req, res) => {
 			})
 });
 //Get a playlist by Id
-router.get('/:id', async(req, res)=>{
+//Protected
+router.get('/:id',authenticate, checkForPlaylistOwner, async(req, res)=>{
 	try{
 			const playlist = await Db.findById(req.params.id);
 			res.status(200).json(playlist);
@@ -23,7 +25,8 @@ router.get('/:id', async(req, res)=>{
 	}
 });
 // Post a new playlist
-router.post('/', validUserId, async (req, res) => {
+//Protected
+router.post('/', authenticate, validUserId, validUser, async (req, res) => {
 		try {
 			let playlist = req.body;
 			let {  name, user_id } = playlist;
@@ -41,21 +44,24 @@ router.post('/', validUserId, async (req, res) => {
 		}
 	});
 // delete a playlist
-router.delete('/:id', (req, res) => {
-	db('playlists').where({id: req.params.id})
-		.del()
-		.then(list => {
-			if(list) {
-				res.status(200).json(json({message: `${confirm} id deleted` }))
-			} else {
-				res.status(404).json({ message: 'This id of Playlist never exists.' })
-			}
-		}).catch(err => {
-			res.status(500).json(err)
-		})
+//Protected
+router.delete('/:id',authenticate, checkForPlaylistOwner, (req, res) => {
+	try{
+			db('playlists').where({id: req.params.id})
+				.del().then(list => {
+					if(list) {
+						res.status(200).json({message: " This Playlist is deleted successfully" });
+					} else {
+						res.status(404).json({ message: 'This id of Playlist never exists.' })
+					}
+				})
+	}catch(err) {
+					res.status(500).json({error: err })
+	}
 })
 // update a playlist
-router.put('/:id', async (req, res) => {
+//Protected
+router.put('/:id',authenticate,checkForPlaylistOwner,  async (req, res) => {
 	try {
 			const {name} = req.body;
 			const {id} =req.params;
@@ -77,8 +83,8 @@ router.put('/:id', async (req, res) => {
 );
 
 //get a user's all playlists
-
-router.get('/:id/playlists', async (req, res) => {
+//Protected
+router.get('/:id/playlists',authenticate, validUser, async (req, res) => {
   try {
     const { id } = req.params;
     const List = await Db.findPlaylist(id);
@@ -90,8 +96,8 @@ router.get('/:id/playlists', async (req, res) => {
 );
 
 // add a song to a playlist
-
-router.post('/:id/song', async(req, res)=>{
+//Protected
+router.post('/:id/song',authenticate, checkForPlaylistOwner, async(req, res)=>{
 	try {    
 		  ///This id is playlist id 
 			const { id } = req.params;
@@ -106,35 +112,40 @@ router.post('/:id/song', async(req, res)=>{
 	
 });
 
-// delete a song from a playlist
-router.delete('/:id/song/:songid',
-	async (req, res) => {
+// Remove a song from a playlist
+//Protected
+router.delete('/:id/song/:songid',authenticate, checkForPlaylistOwner, async (req, res) => {
 	  try {
 		const response = await Db.removeASongFromPlaylist(req.params.songid);
-		console.log(response);
-		res.status(200).json({ message: 'the song was removed from playlist' });
+				if(response ===0 || response != 1){
+						res.status(404).json({ message: 'There no song in the playlist with this id' });
+				}else{
+						res.status(200).json({ message: 'The requested song is removed from the playlist successfully' });
+				}
 	  } catch (err) {
 		res.status(500).json({ error: `there was an error removing the song: ${err}` });
 	  }
 	}
 	);
 	
-	// update a song's index  of a playlist
-router.put('/:id/song/:songid', async (req, res) => {
+// update a song's index  of a playlist
+//Protected
+router.put('/:id/song/:songid',authenticate,checkForPlaylistOwner, async (req, res) => {
 	try {
 			const {playlist_index} = req.body;
 			const id =req.params.songid;
 			if (!playlist_index) {
 				res.status(400).json({ message: "Please provide a index number" })
-		  } else{
-						const count = await Db.updateindex(id, req.body)
+		  } else {
+					await Db.updateindex(id, req.body)
 						.then(list=>{
-							if (list) {
-								res.status(200).json(req.body)
-							} else {
-								res.status(404).json({ message: "The Song with the specific id does not exist." })
+								if (list) {
+									const updatedIndex =  playlist_index;
+									res.status(200).json({message: "Song index updated successfully", updatedIndex })
+								} else {
+									res.status(404).json({ message: "The Song with the specific id does not exist." })
 								}
-							})
+						})
 			}
 	} catch (err) {
 		res.status(500).json({ error: `there was an error accessing the db: ${err}` });
@@ -143,8 +154,8 @@ router.put('/:id/song/:songid', async (req, res) => {
 );
 
 ///get all the songs of a playlist By id 
-
-router.get('/:id/songs', async (req, res) => {
+//Protected
+router.get('/:id/songs',authenticate,checkForPlaylistOwner, async (req, res) => {
 	try {
 		const songs = await Db.getAlltheSongsOfAPlaylist(req.params.id);
 		if(songs.length){
@@ -158,21 +169,5 @@ router.get('/:id/songs', async (req, res) => {
 		res.status(500).json({error: 'There is an error '})
 	}
 });
-
- // Validate Users Id if exists
- async function validUserId(req, res, next){
-  try {
-		const {user_id} = req.body;
-    const user = await userDb.findById(user_id);
-    if (!user) {
-      res.status(400).json({ error: 'This Id is not exists' });
-    } else {
-      next();
-    }
-  } catch (err) {
-    console.log(err);
-  }
-}
-
 
 module.exports = router;
