@@ -8,8 +8,10 @@ router.post('/oauth', async (req, res) => {
     let { token, name, email } = user;
     const existingUser = await db('users').where({ 'email': email }).select('id').first();
     if (existingUser) {
-      console.log(existingUser);
-      return res.status(200).json({ id: existingUser.id, token, email, name });
+      const red = await db('users').where("id", existingUser.id).update(user).returning("id");
+      if(red){
+        return res.status(200).json({ id: existingUser.id, token, email, name });
+      }
     } else {
       const [id] = await db('users').insert(user).returning("id");
       if (id) {
