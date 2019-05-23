@@ -44,9 +44,9 @@ function findById(id) {
     .first();
 }
 
-function findBytoken(token) {
+async function findBytoken(token) {
   return db('users')
-    .where({"token": token})
+    .where({token})
     .select('id')
     .first();
 }
