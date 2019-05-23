@@ -12,7 +12,8 @@ module.exports = {
   addSongsToPlaylist,
   removeASongFromPlaylist,
   getAlltheSongsOfAPlaylist,
-  removeASongFromPlaylist
+  removeASongFromPlaylist,
+  findUserByPlaylistId
 };
 
 async function addSongsToPlaylist(playlist_id,  song){
@@ -76,5 +77,11 @@ function findById(id) {
   return db('playlists')
     .where({ id })
     .select('id', 'name', 'user_id')
+    .first();
+}
+function findUserByPlaylistId(id) {
+  return db('playlists')
+    .where({ id })
+    .select('user_id')
     .first();
 }
