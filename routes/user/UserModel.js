@@ -5,6 +5,7 @@ module.exports = {
   find,
   findBy,
   findById,
+  findBytoken,
   update,
   deleteUser,
 };
@@ -40,5 +41,12 @@ function findById(id) {
   return db('users')
     .where({ id })
     .select('id', 'name', 'email')
+    .first();
+}
+
+async function findBytoken(token) {
+  return db('users')
+    .where({token})
+    .select('id')
     .first();
 }

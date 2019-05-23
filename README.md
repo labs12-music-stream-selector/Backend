@@ -14,6 +14,8 @@
 ![Typescript](https://img.shields.io/npm/types/typescript.svg?style=flat)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/b5c4db1c-b10d-42c3-b157-3746edd9e81d/deploy-status)](https://moodybeats.netlify.com/)
 
+## Project Overview 
+You can find the project at [MOODIBEATS](https://moodibeats.com/).
 
 ## Endpoints
 ### User Table
@@ -63,8 +65,6 @@
 ##### PUT /api/users/{user_id}
 * **Must Be logged in and have a valid token**
 * User can update user's name and email only. Only accessible by that user.
-
- ********************************************************
  ********************************************************
 ##### POST api/user/playlists
 * **Must Be Logged in with Token**
@@ -119,7 +119,6 @@
  ##### DELETE /api/user/playlists/{playlist_id}
  * **User Must Be Logged in with Token**
 * Delete the requested playlist
- ********************************************************
  ********************************************************
 ##### Post api/user/playlists/{playlist_id}/song
 *  **User Must Be Logged in with Token**
@@ -186,4 +185,14 @@
 ```
 
 ---
+## Environment File
+The environment file is required to run this project. The environment file must be in the root directory of the project. For the environment variable to be used in the project, you must have an assignment like this. Where the value is the link to the API that is being used. In our code, this can be used with the variable process.env.DV_ENV.
+
+* SECRET  
+* DV_ENV 
+---
+
+## Documentation
+
+See [Frontend Documentation](https://github.com/labs12-music-stream-selector/Front-End/blob/master/README.md) for details on the fronend of our project.
 
