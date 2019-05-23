@@ -1,11 +1,10 @@
 const router = require('express').Router();
 const userDb = require('./UserModel.js');
-const jwt = require('jsonwebtoken')
-const secret = require('../../auth/config/secrets.js')
+const {authenticate, specialpermission, validUserId, validUser }= require ('../../auth/auth.js');
 
 // Getting all the users
-
-router.get('/', async (req, res) => {
+// Protected
+router.get('/',specialpermission, async (req, res) => {
     await userDb.find()
         .then(users => {
             res.json(users);
@@ -15,8 +14,9 @@ router.get('/', async (req, res) => {
         })
   });
 
-//Get a user by Id
-router.get('/:id', validUserId, async(req, res)=>{
+//Get a user info by Id
+// Protected
+router.get('/:id', authenticate, validUserId, validUser, async(req, res)=>{
     try{
         const user = await userDb.findById(req.params.id);
         res.status(200).json(user);
@@ -26,18 +26,21 @@ router.get('/:id', validUserId, async(req, res)=>{
 });
 
 // Deleting user profile by id
-router.delete('/:id', validUserId, (req, res) => {
+// Protected
+router.delete('/:id', authenticate, validUserId,validUser, (req, res) => {
     const id =req.params.id;
     userDb.deleteUser(id)
     .then( confirm => {
-      res.status(200).json({message: `${confirm} id deleted` })
+      res.status(200).json({message: "Your Id deleted successfully, Id no was:", id  })
      })
   })
 
-  // Updating Users profile
-router.put('/:id',validUserId, async (req, res) => {
+// Updating Users profile
+
+router.put('/:id',authenticate, validUserId,validUser, async (req, res) => {
     try {
         const {name, email} = req.body;
+        const updatedinfo = req.body;
         const {id} =req.params;
         if (!name || !email) {
           res.status(400).json({ message: "Please provide all the required information of the user." })
@@ -45,7 +48,7 @@ router.put('/:id',validUserId, async (req, res) => {
         const count = await userDb.update(id, req.body)
         .then(user=>{
           if (user) {
-            res.status(200).json(req.body)
+            res.status(200).json({message: `your update submitted successfully.`, updatedinfo})
           } else {
             res.status(404).json({ message: "The user with the specified ID does not exist." })
             }
@@ -55,36 +58,5 @@ router.put('/:id',validUserId, async (req, res) => {
     }
   }
 );
-
- // Validate Users Id if exists
-async function validUserId(req, res, next){
-  try {
-    const user = await userDb.findById(req.params.id);
-    if (!user) {
-      res.status(400).json({ error: 'This Id is not exists' });
-    } else {
-      next();
-    }
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-// function restricted(req, res, next) {
-//   const token = req.headers.authorization
-//   console.log(req.headers)
-//   if(token) {
-//     jwt.verify(token, secret.jwtSecret, (err, decodedToken) => {
-//       if(err) {
-//         res.status(401).json({ message: 'Invaild credentials' })
-//       } else {
-//         req.decodedJwt = decodedToken
-//         next()
-//       }
-//     })
-//   } else {
-//     res.status(401).json({ message: 'No token provided' })
-//   }
-// }
 
 module.exports = router;
